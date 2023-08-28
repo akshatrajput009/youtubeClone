@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ApiContext } from "./context/Contextapi.js";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Feed } from "./components/Feed.js";
+import { SearchResult } from "./components/SearchResult.js";
+import { VideoDetails } from "./components/VideoDetails.js";
+import { Header } from "./components/Header.js";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApiContext>
+      <BrowserRouter>
+        <div className="flex flex-col h-full">
+          <Header />
+          <Routes>
+            <Route path="/" exact element={<Feed />} />
+            <Route
+              path="/searchResult/:searchQuery"
+              element={<SearchResult />}
+            />
+            <Route path="/video/:videoId" element={<VideoDetails />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </ApiContext>
   );
-}
+};
 
 export default App;
